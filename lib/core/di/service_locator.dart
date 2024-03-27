@@ -2,9 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:my_users/core/network/network_client.dart';
 import 'package:my_users/core/shared/constant/constant.dart';
+import 'package:my_users/features/home/data/api/city_api.dart';
 import 'package:my_users/features/home/data/api/user_api.dart';
+import 'package:my_users/features/home/data/repository/city_repository_impl.dart';
 import 'package:my_users/features/home/data/repository/user_repository_impl.dart';
+import 'package:my_users/features/home/domain/repository/city_repository.dart';
 import 'package:my_users/features/home/domain/repository/user_repository.dart';
+import 'package:my_users/features/home/domain/usecase/get_city_usecase.dart';
 import 'package:my_users/features/home/domain/usecase/get_user_usecase.dart';
 import 'package:my_users/features/home/presentation/bloc/home_bloc.dart';
 
@@ -25,5 +29,14 @@ setupServiceLocator() async {
       () => UserRepositoryImpl(userApi: serviceLocator()));
   serviceLocator.registerLazySingleton<GetUserUseCase>(
     () => GetUserUseCase(serviceLocator()),
+  );
+
+  // city
+  serviceLocator.registerLazySingleton<CityApi>(() => CityApi(
+      dio: serviceLocator(), path: serviceLocator<Constant>().pathCity));
+  serviceLocator.registerLazySingleton<CityRepository>(
+      () => CityRepositoryImpl(cityApi: serviceLocator()));
+  serviceLocator.registerLazySingleton<GetCityUseCase>(
+    () => GetCityUseCase(serviceLocator()),
   );
 }

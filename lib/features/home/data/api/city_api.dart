@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:my_users/core/shared/constant/constant.dart';
 import 'package:my_users/features/home/domain/model/model_city.dart';
 
 class CityApi {
   final Dio dio;
-  CityApi({required this.dio});
+  final String path;
+  CityApi({required this.dio, required this.path});
 
   Future<List<ModelCity>> getListCity() async {
-    final res = await dio.get(Constant().pathCity);
+    final res = await dio.get(path);
     return List<Map<String, dynamic>>.from(res.data)
         .map((e) => ModelCity.fromJson(e))
         .toList();

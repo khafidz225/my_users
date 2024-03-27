@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:my_users/core/di/service_locator.dart';
+import 'package:my_users/core/routes/app_pages.dart';
 import 'package:my_users/core/shared/utils/global_function.dart';
 import 'package:my_users/core/shared/utils/palette.dart';
 import 'package:my_users/core/shared/widget/list_tile/customListTile.dart';
@@ -18,7 +19,7 @@ class HomeView extends StatelessWidget {
         appBar: PreferredSize(
             preferredSize: Size(Get.width, 50),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -48,8 +49,12 @@ class HomeView extends StatelessWidget {
                 ],
               ),
             )),
+        floatingActionButton: FloatingActionButton.small(
+          child: const Icon(Icons.add),
+          onPressed: () {},
+        ),
         body: Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -68,7 +73,7 @@ class HomeView extends StatelessWidget {
                               suffixIcon: const Icon(Icons.search)),
                           onChanged: (value) {
                             serviceLocator<HomeBloc>()
-                                .add(MainGetUserEvent(value, false));
+                                .add(MainGetUserEvent(value));
                           },
                         ),
                       ),
@@ -76,23 +81,9 @@ class HomeView extends StatelessWidget {
                         width: 10,
                       ),
                       InkWell(
-                        onTap: () {},
-                        child: Container(
-                          // padding: const EdgeInsets.all(5),
-                          width: 45, height: 45,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Palette.n50,
-                              ),
-                              borderRadius: BorderRadius.circular(15)),
-                          child: const Icon(Icons.sort_by_alpha),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed(Routes.HOMEFILTER);
+                        },
                         child: Container(
                           // padding: const EdgeInsets.all(5),
                           width: 45, height: 45,
@@ -161,8 +152,7 @@ class HomeView extends StatelessWidget {
                                         // serviceLocator<HomeBloc>()
                                         //     .add(HomeShowSliderEvent(data.id));
                                         serviceLocator<HomeBloc>().add(
-                                            MainGetUserEvent(
-                                                controller.text, false));
+                                            MainGetUserEvent(controller.text));
                                         // print('isShowL ${state.isShow}');
 
                                         print('state.id: ${state.id}');

@@ -31,6 +31,10 @@ class HomeGetUserErrorState extends HomeState {
   List<Object> get props => [message];
 }
 
-// class HomeShowSliderState extends HomeState {
-//   HomeShowSliderState(this.id);
-// }
+class HomeGetCitySuccessState extends HomeState {
+  final List<ModelCity> city;
+  HomeGetCitySuccessState(this.city);
+
+  @override
+  List<Object> get props => [city];
+}

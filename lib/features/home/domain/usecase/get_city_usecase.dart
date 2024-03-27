@@ -5,7 +5,7 @@ class GetCityUseCase {
   final CityRepository cityRepositoryImpl;
   GetCityUseCase(this.cityRepositoryImpl);
 
-  Future<List<ModelCity>> call(String test) async {
+  Future<List<ModelCity>> call() async {
     return await cityRepositoryImpl.getCity();
   }
 }
