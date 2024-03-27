@@ -30,8 +30,7 @@ class AppPages {
         page: () => BlocProvider.value(
               value: serviceLocator<HomeBloc>()
                 ..add(MainGetCityEvent(
-                    valueCity: serviceLocator<HomeBloc>().valueCity,
-                    isReload: false)),
+                    valueCity: HomeBloc().valueCity, isReload: false)),
               child: const HomeFilter(),
             ),
         fullscreenDialog: true,

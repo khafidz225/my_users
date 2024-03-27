@@ -103,10 +103,10 @@ class HomeFilter extends StatelessWidget {
                         ),
                         onPressed: () {
                           Get.back();
-                          serviceLocator<HomeBloc>().add(
-                              MainGetUserEvent(valueCity: '', isReload: true));
-                          serviceLocator<HomeBloc>().add(
-                              MainGetCityEvent(valueCity: '', isReload: true));
+                          serviceLocator<HomeBloc>().add(MainGetUserEvent(
+                              valueCity: null, isReload: true));
+                          serviceLocator<HomeBloc>().add(MainGetCityEvent(
+                              valueCity: null, isReload: true));
                         },
                         child: Text(
                           'Reset',
@@ -134,7 +134,7 @@ class HomeFilter extends StatelessWidget {
                               valueCity: filterController.text == ''
                                   ? null
                                   : filterController.text,
-                              isReload: false));
+                              isReload: true));
                           serviceLocator<HomeBloc>().add(MainGetCityEvent(
                               valueCity: filterController.text,
                               isReload: false));

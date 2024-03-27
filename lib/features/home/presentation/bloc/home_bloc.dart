@@ -74,21 +74,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeLoadingState());
     print('bloc valueCity 1: $valueCity');
     if (event.valueCity == null || event.isReload) {
-      print('bloc valueCity 2: $valueCity');
-      valueCity = event.valueCity;
+      valueCity = event.isReload ? null : event.valueCity ?? valueCity;
       await serviceLocator<CityUseCase>().get().then((value) {
+        print('bloc valueCity 2: $valueCity');
         valueListCity = value;
         valueListCity.sort(
           (a, b) => a.name!.toLowerCase().compareTo(b.name!.toLowerCase()),
         );
         return emit(HomeGetCitySuccessState(
-            city: valueListCity, valueCityState: valueCity ?? ''));
+            city: valueListCity, valueCityState: valueCity));
       });
     } else {
+      valueCity = event.valueCity ?? valueCity;
       print('bloc valueCity 3: $valueCity');
-      valueCity = valueCity;
-      HomeGetCitySuccessState(
-          city: valueListCity, valueCityState: valueCity ?? '');
+      HomeGetCitySuccessState(city: valueListCity, valueCityState: valueCity);
     }
   }
 
