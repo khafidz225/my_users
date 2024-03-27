@@ -21,7 +21,6 @@ class UserApi {
 
   // Post
   Future postUsers(ModelUser dataUser) async {
-    // print('dataPosts: ${dataUser.toJson()}');
     await dio.post(path, data: dataUser.toJson()).then((value) async {
       serviceLocator<HomeBloc>().add(MainGetUserEvent(isReload: true));
 

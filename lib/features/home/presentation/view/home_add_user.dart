@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:my_users/core/di/service_locator.dart';
 import 'package:my_users/core/shared/utils/palette.dart';
+import 'package:my_users/core/shared/widget/appbar/sub_appbar.dart';
 import 'package:my_users/core/shared/widget/dropdown/dropdown_custom.dart';
 import 'package:my_users/core/shared/widget/list_tile/inputListTile.dart';
 import 'package:my_users/features/home/domain/model/model_user.dart';
@@ -19,41 +20,23 @@ class HomeAddUser extends StatelessWidget {
     TextEditingController phoneNumberController = TextEditingController();
     TextEditingController cityController = TextEditingController();
     TextEditingController addressController = TextEditingController();
+
+    FocusNode nameFocusNode = FocusNode();
+    FocusNode emailFocusNode = FocusNode();
+    FocusNode phoneFocusNode = FocusNode();
+    FocusNode addressFocusNode = FocusNode();
     return SafeArea(
         child: Scaffold(
       appBar: PreferredSize(
-          preferredSize: Size(Get.width, 50),
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 3),
-                  child: GestureDetector(
-                    onTap: () async {
-                      Get.back();
-                      serviceLocator<HomeBloc>()
-                          .add(MainGetUserEvent(isReload: false));
-                    },
-                    child: const Icon(
-                      Icons.arrow_back_outlined,
-                      size: 18,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                const Text(
-                  'Add User',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          )),
+        preferredSize: Size(Get.width, 50),
+        child: SubAppbar(
+          onTap: () async {
+            Get.back(closeOverlays: true);
+            serviceLocator<HomeBloc>().add(MainGetUserEvent(isReload: false));
+          },
+          title: 'Add User',
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
@@ -71,12 +54,18 @@ class HomeAddUser extends StatelessWidget {
                         title: 'Name',
                         child: TextFormField(
                           controller: nameController,
+                          focusNode: nameFocusNode,
                           decoration: InputDecoration(
                             hintText: 'Example: Khafidz Maulana',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (value) {
+                            nameFocusNode.unfocus();
+                            FocusScope.of(context).requestFocus(emailFocusNode);
+                          },
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -90,12 +79,18 @@ class HomeAddUser extends StatelessWidget {
                         title: 'Email',
                         child: TextFormField(
                           controller: emailController,
+                          focusNode: emailFocusNode,
                           decoration: InputDecoration(
                             hintText: 'Example: Khafidz@gmail.com',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (value) {
+                            emailFocusNode.unfocus();
+                            FocusScope.of(context).requestFocus(phoneFocusNode);
+                          },
                           keyboardType: TextInputType.emailAddress,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
@@ -112,12 +107,19 @@ class HomeAddUser extends StatelessWidget {
                         title: 'Phone Number',
                         child: TextFormField(
                           controller: phoneNumberController,
+                          focusNode: phoneFocusNode,
                           decoration: InputDecoration(
                             hintText: 'Example: ',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (value) {
+                            phoneFocusNode.unfocus();
+                            FocusScope.of(context)
+                                .requestFocus(addressFocusNode);
+                          },
                           keyboardType: TextInputType.phone,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
@@ -133,8 +135,6 @@ class HomeAddUser extends StatelessWidget {
                         child: BlocBuilder<HomeBloc, HomeState>(
                           builder: (context, state) {
                             if (state is HomeGetCitySuccessState) {
-                              print(
-                                  'widget valueCityState: ${state.valueCityState}');
                               return DropdownCustom(
                                 items: state.city
                                     .map((e) => DropdownMenuItem(
@@ -163,12 +163,17 @@ class HomeAddUser extends StatelessWidget {
                         title: 'Address',
                         child: TextFormField(
                           controller: addressController,
+                          focusNode: addressFocusNode,
                           decoration: InputDecoration(
                             hintText: 'Example: ',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                          textInputAction: TextInputAction.done,
+                          onFieldSubmitted: (value) {
+                            addressFocusNode.unfocus();
+                          },
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (value!.isEmpty) {

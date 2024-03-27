@@ -13,8 +13,8 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitialState()) {
     on<MainGetUserEvent>(mainGetUserEvent);
-    on<MainGetCityEvent>(mainGetCityEvent);
     on<HandlePostUserEvent>(handlePostUserEvent);
+    on<MainGetCityEvent>(mainGetCityEvent);
   }
   String? idUser;
   String? valueCity;
@@ -64,19 +64,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future handlePostUserEvent(
       HandlePostUserEvent event, Emitter<HomeState> emit) async {
     postUsers = event.dataUser;
-    await serviceLocator<UserUseCase>().post(event.dataUser).then((value) {
-      print('BERHASIL MENAMBAHKAN USER');
-    });
+    await serviceLocator<UserUseCase>().post(event.dataUser).then((value) {});
   }
 
   Future mainGetCityEvent(
       MainGetCityEvent event, Emitter<HomeState> emit) async {
     emit(HomeLoadingState());
-    print('bloc valueCity 1: $valueCity');
     if (event.valueCity == null || event.isReload) {
       valueCity = event.isReload ? null : event.valueCity ?? valueCity;
       await serviceLocator<CityUseCase>().get().then((value) {
-        print('bloc valueCity 2: $valueCity');
         valueListCity = value;
         valueListCity.sort(
           (a, b) => a.name!.toLowerCase().compareTo(b.name!.toLowerCase()),
@@ -86,16 +82,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       });
     } else {
       valueCity = event.valueCity ?? valueCity;
-      print('bloc valueCity 3: $valueCity');
+
       HomeGetCitySuccessState(city: valueListCity, valueCityState: valueCity);
     }
   }
-
-  // Future homeShowSloder(
-  //     HomeShowSliderEvent event, Emitter<HomeState> emit) async {
-  //   idUser = event.id;
-  //   print('homeshow 1: ${event.id}');
-  //   print('homeshow 2: $idUser');
-  //   return emit(HomeGetUserSuccessState(valueListUser, idUser));
-  // }
 }

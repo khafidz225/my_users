@@ -17,9 +17,9 @@ class HomeView extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
-            preferredSize: Size(Get.width, 50),
+            preferredSize: Size(Get.width, 70),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -53,17 +53,6 @@ class HomeView extends StatelessWidget {
         floatingActionButton: FloatingActionButton.small(
           backgroundColor: Palette.g40,
           onPressed: () async {
-            // serviceLocator<HomeBloc>().add(HandlePostUserEvent());
-            // Get.showSnackbar(GetSnackBar(
-            //   title: 'Success',
-            //   message: 'Successfully added users',
-            //   icon: const Icon(
-            //     Icons.check,
-            //     color: Colors.white,
-            //   ),
-            //   backgroundColor: Palette.g40,
-            //   duration: const Duration(seconds: 2),
-            // ));
             Get.toNamed(Routes.HOMEADDUSER);
           },
           child: const Icon(Icons.add),
@@ -101,8 +90,8 @@ class HomeView extends StatelessWidget {
                           Get.toNamed(Routes.HOMEFILTER);
                         },
                         child: Container(
-                          // padding: const EdgeInsets.all(5),
-                          width: 45, height: 45,
+                          width: 45,
+                          height: 45,
                           decoration: BoxDecoration(
                               border: Border.all(
                                 color: Palette.n50,
@@ -163,17 +152,7 @@ class HomeView extends StatelessWidget {
                                       more: true,
                                       moreOptionType:
                                           MoreOptionType.moreOptionTap,
-                                      onTapMore: () {
-                                        // serviceLocator<HomeBloc>().add(HomeShowSlider(data.id));
-                                        // serviceLocator<HomeBloc>()
-                                        //     .add(HomeShowSliderEvent(data.id));
-                                        // serviceLocator<HomeBloc>().add(
-                                        //     MainGetUserEvent(
-                                        //         keyword: controller.text));
-                                        // print('isShowL ${state.isShow}');
-
-                                        print('state.id: ${state.id}');
-                                      },
+                                      onTapMore: () {},
                                       titleMore1: 'edit',
                                       titleMore2: 'delete',
                                       isOpenMore: state.id == data.id,
@@ -183,59 +162,11 @@ class HomeView extends StatelessWidget {
                         ),
                       );
                     }
-                    return const Text('Data not found');
+                    return const Center(child: Text('Data not found'));
                   },
-                )
-                // SingleChildScrollView(
-                //   child: Column(
-                //     children: [
-
-                //     ],
-                //   ),
-                // )
+                ),
               ],
-            )
-            // BlocBuilder<HomeBloc, HomeState>(
-            //   builder: (context, state) {
-            //     if (state is HomeLoadingState) {
-            //       return const Center(
-            //         child: CircularProgressIndicator(),
-            //       );
-            //     }
-            //     if (state is HomeGetUserErrorState) {
-            // return Center(
-            //   child: Text(
-            //     state.message,
-            //     textAlign: TextAlign.center,
-            //   ),
-            // );
-            //     }
-            //     if (state is HomeGetUserSuccessState) {
-            //       print('state: ${state.users.map((e) => e.name)}');
-            //       return Center(
-            //         child: Column(
-            //           children: [
-            //             TextFormField(
-            //               onChanged: (value) {
-            // serviceLocator<HomeBloc>()
-            //     .add(MainGetUserEvent(value));
-            //               },
-            //             ),
-            //             Column(
-            //               children: state.users
-            //                   .map((e) => Text(e.name ?? '-'))
-            //                   .toList(),
-            //             ),
-            //           ],
-            //         ),
-            //       );
-            //     }
-            //     return const SizedBox(
-            //       child: Text('Ga ada datanya'),
-            //     );
-            //   },
-            // ),
-            ),
+            )),
       ),
     );
   }
