@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:my_users/core/di/service_locator.dart';
 import 'package:my_users/core/shared/utils/palette.dart';
 import 'package:my_users/core/shared/widget/dropdown/dropdown_custom.dart';
+import 'package:my_users/core/shared/widget/list_tile/inputListTile.dart';
 import 'package:my_users/features/home/presentation/bloc/home_bloc.dart';
 
 class HomeFilter extends StatelessWidget {
@@ -31,7 +32,7 @@ class HomeFilter extends StatelessWidget {
                             .add(MainGetUserEvent(isReload: false));
                       },
                       child: const Icon(
-                        Icons.arrow_back_ios_new,
+                        Icons.arrow_back_outlined,
                         size: 18,
                       ),
                     ),
@@ -42,7 +43,7 @@ class HomeFilter extends StatelessWidget {
                   const Text(
                     'Filter User',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -55,48 +56,36 @@ class HomeFilter extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'City',
-                    style: TextStyle(
-                        fontFamily: 'Mulish',
-                        fontWeight: FontWeight.w700,
-                        color: Palette.n70),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  BlocBuilder<HomeBloc, HomeState>(
-                    builder: (context, state) {
-                      if (state is HomeGetCitySuccessState) {
-                        print('widget valueCityState: ${state.valueCityState}');
-                        return DropdownCustom(
-                          items: state.city
-                              .map((e) => DropdownMenuItem(
-                                  value: e.name, child: Text(e.name ?? '-')))
-                              .toList(),
-                          onChanged: (value) {},
-                          value: state.valueCityState == ''
-                              ? null
-                              : state.valueCityState,
-                          controller: filterController,
-                          isConditionNull: false,
-                          hintText: 'Please select a city',
-                        );
-                      }
+              InputListTile(
+                title: 'City',
+                child: BlocBuilder<HomeBloc, HomeState>(
+                  builder: (context, state) {
+                    if (state is HomeGetCitySuccessState) {
+                      print('widget valueCityState: ${state.valueCityState}');
                       return DropdownCustom(
-                        items: const [],
-                        value: null,
-                        controller: filterController,
+                        items: state.city
+                            .map((e) => DropdownMenuItem(
+                                value: e.name, child: Text(e.name ?? '-')))
+                            .toList(),
                         onChanged: (value) {},
+                        value: state.valueCityState == ''
+                            ? null
+                            : state.valueCityState,
+                        controller: filterController,
                         isConditionNull: false,
-                        hintText: 'Loading...',
+                        hintText: 'Please select a city',
                       );
-                    },
-                  ),
-                ],
+                    }
+                    return DropdownCustom(
+                      items: const [],
+                      value: null,
+                      controller: filterController,
+                      onChanged: (value) {},
+                      isConditionNull: false,
+                      hintText: 'Loading...',
+                    );
+                  },
+                ),
               ),
               Row(
                 children: [
@@ -120,7 +109,7 @@ class HomeFilter extends StatelessWidget {
                               MainGetCityEvent(valueCity: '', isReload: true));
                         },
                         child: Text(
-                          'Setel Ulang',
+                          'Reset',
                           style: TextStyle(
                               color: Palette.r50,
                               fontWeight: FontWeight.w700,
@@ -151,7 +140,7 @@ class HomeFilter extends StatelessWidget {
                               isReload: false));
                         },
                         child: const Text(
-                          'Terapkan Filter',
+                          'Apply Filter',
                           style: TextStyle(
                               fontFamily: 'Mulish',
                               fontWeight: FontWeight.w700),

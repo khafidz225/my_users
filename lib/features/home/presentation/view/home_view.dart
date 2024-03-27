@@ -53,7 +53,7 @@ class HomeView extends StatelessWidget {
         floatingActionButton: FloatingActionButton.small(
           backgroundColor: Palette.g40,
           onPressed: () async {
-            serviceLocator<HomeBloc>().add(HandlePostUserEvent());
+            // serviceLocator<HomeBloc>().add(HandlePostUserEvent());
             // Get.showSnackbar(GetSnackBar(
             //   title: 'Success',
             //   message: 'Successfully added users',
@@ -64,6 +64,7 @@ class HomeView extends StatelessWidget {
             //   backgroundColor: Palette.g40,
             //   duration: const Duration(seconds: 2),
             // ));
+            Get.toNamed(Routes.HOMEADDUSER);
           },
           child: const Icon(Icons.add),
         ),
