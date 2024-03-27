@@ -1,16 +1,16 @@
-# my_users
+## A. Cara Penggunaan Aplikasi
 
-A new Flutter project.
+- Saat membuka aplikasi langsung di arahkan ke Halaman Home dan datanya sudah di urutkan berdasarkan abjad.
 
-## Getting Started
+- Jika ingin mencari name tinggal click search lalu tinggal ketik name yang ingin di cari.
 
-This project is a starting point for a Flutter application.
+- Jika hanya ingin menampilkan user yang kotanya di Tangerang, tinggal click icon filter dan tinggal pilih Tangerang dan jangan lupa click button apply filter, Maka secara otomati hanya menampilkan data yang kotanga Tangerang.
 
-A few resources to get you started if this is your first Flutter project:
+- Jika ingin menambahkan user tinggal click icon add, lalu tinggal isi semua form yang ada.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## B. Teknologi yang digunakan
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Bloc - State Management
+- GetX - Routing
+- GetIt - Sependency Injection
+- Dio - HTTP
