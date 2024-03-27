@@ -26,9 +26,10 @@ class HomeView extends StatelessWidget {
                   const Text(
                     'My Users',
                     style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: 'Mulish',
+                        color: Colors.black),
                   ),
                   BlocSelector<HomeBloc, HomeState, String>(
                     selector: (state) {
@@ -39,7 +40,7 @@ class HomeView extends StatelessWidget {
                       }
                     },
                     builder: (context, state) => Text(
-                      state,
+                      '$state data',
                       style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 12,
@@ -50,8 +51,9 @@ class HomeView extends StatelessWidget {
               ),
             )),
         floatingActionButton: FloatingActionButton.small(
-          child: const Icon(Icons.add),
+          backgroundColor: Palette.g40,
           onPressed: () {},
+          child: const Icon(Icons.add),
         ),
         body: Padding(
             padding: const EdgeInsets.all(15),
@@ -68,12 +70,13 @@ class HomeView extends StatelessWidget {
                           controller: controller,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15)),
+                                  borderRadius: BorderRadius.circular(10)),
                               labelText: 'Cari',
+                              labelStyle: const TextStyle(fontFamily: 'Mulish'),
                               suffixIcon: const Icon(Icons.search)),
                           onChanged: (value) {
                             serviceLocator<HomeBloc>()
-                                .add(MainGetUserEvent(value));
+                                .add(MainGetUserEvent(keyword: value));
                           },
                         ),
                       ),
@@ -91,7 +94,7 @@ class HomeView extends StatelessWidget {
                               border: Border.all(
                                 color: Palette.n50,
                               ),
-                              borderRadius: BorderRadius.circular(15)),
+                              borderRadius: BorderRadius.circular(10)),
                           child: const Icon(Icons.filter_list_rounded),
                         ),
                       )
@@ -105,8 +108,8 @@ class HomeView extends StatelessWidget {
                   builder: (context, state) {
                     print('rebuild: ');
                     if (state is HomeLoadingState) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                      return Center(
+                        child: CircularProgressIndicator(color: Palette.g40),
                       );
                     }
                     if (state is HomeGetUserErrorState) {
@@ -152,7 +155,8 @@ class HomeView extends StatelessWidget {
                                         // serviceLocator<HomeBloc>()
                                         //     .add(HomeShowSliderEvent(data.id));
                                         serviceLocator<HomeBloc>().add(
-                                            MainGetUserEvent(controller.text));
+                                            MainGetUserEvent(
+                                                keyword: controller.text));
                                         // print('isShowL ${state.isShow}');
 
                                         print('state.id: ${state.id}');

@@ -8,8 +8,8 @@ sealed class HomeEvent extends Equatable {
 
 class MainGetUserEvent extends HomeEvent {
   final String? keyword;
-
-  MainGetUserEvent(this.keyword);
+  final String? filterCity;
+  MainGetUserEvent({this.keyword, this.filterCity});
 }
 
 class MainGetCityEvent extends HomeEvent {}
