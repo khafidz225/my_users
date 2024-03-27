@@ -71,12 +71,12 @@ class HomeView extends StatelessWidget {
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
-                              labelText: 'Cari',
+                              labelText: 'Search',
                               labelStyle: const TextStyle(fontFamily: 'Mulish'),
                               suffixIcon: const Icon(Icons.search)),
                           onChanged: (value) {
-                            serviceLocator<HomeBloc>()
-                                .add(MainGetUserEvent(keyword: value));
+                            serviceLocator<HomeBloc>().add(MainGetUserEvent(
+                                keyword: value, isReload: true));
                           },
                         ),
                       ),
@@ -106,7 +106,7 @@ class HomeView extends StatelessWidget {
                 ),
                 BlocBuilder<HomeBloc, HomeState>(
                   builder: (context, state) {
-                    print('rebuild: ');
+                    print('rebuild: ${state.toString()}');
                     if (state is HomeLoadingState) {
                       return Center(
                         child: CircularProgressIndicator(color: Palette.g40),
@@ -154,9 +154,9 @@ class HomeView extends StatelessWidget {
                                         // serviceLocator<HomeBloc>().add(HomeShowSlider(data.id));
                                         // serviceLocator<HomeBloc>()
                                         //     .add(HomeShowSliderEvent(data.id));
-                                        serviceLocator<HomeBloc>().add(
-                                            MainGetUserEvent(
-                                                keyword: controller.text));
+                                        // serviceLocator<HomeBloc>().add(
+                                        //     MainGetUserEvent(
+                                        //         keyword: controller.text));
                                         // print('isShowL ${state.isShow}');
 
                                         print('state.id: ${state.id}');

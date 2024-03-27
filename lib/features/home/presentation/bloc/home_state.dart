@@ -33,7 +33,9 @@ class HomeGetUserErrorState extends HomeState {
 
 class HomeGetCitySuccessState extends HomeState {
   final List<ModelCity> city;
-  HomeGetCitySuccessState(this.city);
+  final String? valueCityState;
+
+  HomeGetCitySuccessState({required this.city, this.valueCityState});
 
   @override
   List<Object> get props => [city];

@@ -27,7 +27,8 @@ class HomeFilter extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () async {
                         Get.back();
-                        serviceLocator<HomeBloc>().add(MainGetUserEvent());
+                        serviceLocator<HomeBloc>()
+                            .add(MainGetUserEvent(isReload: false));
                       },
                       child: const Icon(
                         Icons.arrow_back_ios_new,
@@ -70,12 +71,16 @@ class HomeFilter extends StatelessWidget {
                   BlocBuilder<HomeBloc, HomeState>(
                     builder: (context, state) {
                       if (state is HomeGetCitySuccessState) {
+                        print('widget valueCityState: ${state.valueCityState}');
                         return DropdownCustom(
                           items: state.city
                               .map((e) => DropdownMenuItem(
                                   value: e.name, child: Text(e.name ?? '-')))
                               .toList(),
                           onChanged: (value) {},
+                          value: state.valueCityState == ''
+                              ? null
+                              : state.valueCityState,
                           controller: filterController,
                           isConditionNull: false,
                           hintText: 'Please select a city',
@@ -83,6 +88,7 @@ class HomeFilter extends StatelessWidget {
                       }
                       return DropdownCustom(
                         items: const [],
+                        value: null,
                         controller: filterController,
                         onChanged: (value) {},
                         isConditionNull: false,
@@ -106,7 +112,13 @@ class HomeFilter extends StatelessWidget {
                               ),
                               side: BorderSide(color: Palette.r50)),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.back();
+                          serviceLocator<HomeBloc>().add(
+                              MainGetUserEvent(valueCity: '', isReload: true));
+                          serviceLocator<HomeBloc>().add(
+                              MainGetCityEvent(valueCity: '', isReload: true));
+                        },
                         child: Text(
                           'Setel Ulang',
                           style: TextStyle(
@@ -126,7 +138,18 @@ class HomeFilter extends StatelessWidget {
                             backgroundColor: Palette.g40,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10))),
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.back();
+                          print('filterController: ${filterController.text}');
+                          serviceLocator<HomeBloc>().add(MainGetUserEvent(
+                              valueCity: filterController.text == ''
+                                  ? null
+                                  : filterController.text,
+                              isReload: false));
+                          serviceLocator<HomeBloc>().add(MainGetCityEvent(
+                              valueCity: filterController.text,
+                              isReload: false));
+                        },
                         child: const Text(
                           'Terapkan Filter',
                           style: TextStyle(

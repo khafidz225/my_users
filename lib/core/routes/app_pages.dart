@@ -16,14 +16,18 @@ class AppPages {
     GetPage(
       name: _Paths.HOME,
       page: () => BlocProvider.value(
-        value: serviceLocator<HomeBloc>()..add(MainGetUserEvent()),
+        value: serviceLocator<HomeBloc>()
+          ..add(MainGetUserEvent(isReload: false)),
         child: const HomeView(),
       ),
     ),
     GetPage(
         name: _Paths.HOMEFILTER,
         page: () => BlocProvider.value(
-              value: serviceLocator<HomeBloc>()..add(MainGetCityEvent()),
+              value: serviceLocator<HomeBloc>()
+                ..add(MainGetCityEvent(
+                    valueCity: serviceLocator<HomeBloc>().valueCity,
+                    isReload: false)),
               child: const HomeFilter(),
             ),
         fullscreenDialog: true,

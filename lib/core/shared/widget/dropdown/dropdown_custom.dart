@@ -6,6 +6,7 @@ class DropdownCustom extends StatelessWidget {
       required this.items,
       required this.isConditionNull,
       required this.controller,
+      required this.value,
       this.labelText,
       this.hintText,
       super.key});
@@ -13,13 +14,15 @@ class DropdownCustom extends StatelessWidget {
   TextEditingController controller;
   bool isConditionNull;
   void Function(dynamic value)? onChanged;
+  dynamic value;
   String? labelText;
   String? hintText;
   @override
   Widget build(BuildContext context) {
     return isConditionNull
         ? TextFormField(
-            controller: controller,
+            controller:
+                value != null ? TextEditingController(text: value) : controller,
             decoration: InputDecoration(
               labelText: labelText,
               hintText: hintText,
@@ -46,6 +49,7 @@ class DropdownCustom extends StatelessWidget {
             ),
             autofocus: false,
             focusColor: Colors.white,
+            value: value,
             items: items,
             onChanged: (value) {
               controller.text = value;
