@@ -15,7 +15,11 @@ class AppPages {
     GetPage(
         name: _Paths.HOME,
         page: () => BlocProvider.value(
-              value: serviceLocator<HomeBloc>()..add(MainGetUserEvent(null)),
+              value: serviceLocator<HomeBloc>()
+                ..add(MainGetUserEvent(
+                  null,
+                  null,
+                )),
               child: const HomeView(),
             )
         // const HomeView(),

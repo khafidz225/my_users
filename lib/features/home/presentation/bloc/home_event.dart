@@ -8,5 +8,11 @@ sealed class HomeEvent extends Equatable {
 
 class MainGetUserEvent extends HomeEvent {
   final String? keyword;
-  MainGetUserEvent(this.keyword);
+  final bool? isShow;
+  MainGetUserEvent(this.keyword, this.isShow);
+}
+
+class HomeShowSliderEvent extends HomeEvent {
+  late final String? id;
+  HomeShowSliderEvent(this.id);
 }

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:my_users/core/network/network_client.dart';
-import 'package:my_users/core/shared/constant.dart';
+import 'package:my_users/core/shared/constant/constant.dart';
 import 'package:my_users/features/home/data/api/user_api.dart';
 import 'package:my_users/features/home/data/repository/user_repository_impl.dart';
 import 'package:my_users/features/home/domain/repository/user_repository.dart';

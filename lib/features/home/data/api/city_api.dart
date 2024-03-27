@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:my_users/core/shared/constant.dart';
+import 'package:my_users/core/shared/constant/constant.dart';
 import 'package:my_users/features/home/domain/model/model_city.dart';
 
 class CityApi {

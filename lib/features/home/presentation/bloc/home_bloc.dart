@@ -9,11 +9,13 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  List<ModelUser> valueListUser = [];
   HomeBloc() : super(HomeInitialState()) {
     on<MainGetUserEvent>(mainGetUserEvent);
-    // on<SearchUserEvent>();
+    on<HomeShowSliderEvent>(homeShowSloder);
   }
+  List<ModelUser> valueListUser = [];
+  String? idUser;
+
   Future mainGetUserEvent(
       MainGetUserEvent event, Emitter<HomeState> emit) async {
     if (event.keyword == null) {
@@ -32,8 +34,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }
 
       print('valueListUser: ${valueListUser.map((e) => e.name)}');
-      return emit(HomeGetUserSuccessState(valueListUser));
+      return emit(HomeGetUserSuccessState(valueListUser, idUser));
     }).onError(
         (error, stackTrace) => emit(HomeGetUserErrorState(error.toString())));
+  }
+
+  Future homeShowSloder(
+      HomeShowSliderEvent event, Emitter<HomeState> emit) async {
+    idUser = event.id;
+    print('homeshow 1: ${event.id}');
+    print('homeshow 2: $idUser');
+    return emit(HomeGetUserSuccessState(valueListUser, idUser));
   }
 }

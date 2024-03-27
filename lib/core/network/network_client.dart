@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:my_users/core/shared/constant.dart';
+import 'package:my_users/core/shared/constant/constant.dart';
 
 class NetworkClient {
   final Dio _dio;
