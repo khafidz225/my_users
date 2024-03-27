@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:my_users/core/di/service_locator.dart';
 import 'package:my_users/core/shared/utils/palette.dart';
 import 'package:my_users/core/shared/widget/dropdown/dropdown_custom.dart';
 import 'package:my_users/core/shared/widget/list_tile/inputListTile.dart';
+import 'package:my_users/features/home/domain/model/model_user.dart';
 import 'package:my_users/features/home/presentation/bloc/home_bloc.dart';
 
 class HomeAddUser extends StatelessWidget {
@@ -30,6 +32,8 @@ class HomeAddUser extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () async {
                       Get.back();
+                      serviceLocator<HomeBloc>()
+                          .add(MainGetUserEvent(isReload: false));
                     },
                     child: const Icon(
                       Icons.arrow_back_outlined,
@@ -97,7 +101,7 @@ class HomeAddUser extends StatelessWidget {
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Please input your Email';
-                            } else if (value.isEmail) {
+                            } else if (!value.isEmail) {
                               return 'Email not valid';
                             }
                             return null;
@@ -158,7 +162,7 @@ class HomeAddUser extends StatelessWidget {
                       InputListTile(
                         title: 'Address',
                         child: TextFormField(
-                          controller: phoneNumberController,
+                          controller: addressController,
                           decoration: InputDecoration(
                             hintText: 'Example: ',
                             border: OutlineInputBorder(
@@ -194,17 +198,19 @@ class HomeAddUser extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10))),
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
+                            serviceLocator<HomeBloc>().add(
+                              HandlePostUserEvent(
+                                dataUser: ModelUser(
+                                  name: nameController.text,
+                                  email: emailController.text,
+                                  phoneNumber: phoneNumberController.text,
+                                  city: cityController.text,
+                                  address: addressController.text,
+                                ),
+                              ),
+                            );
                             Get.back();
                           }
-
-                          // print('filterController: ${filterController.text}');
-                          // serviceLocator<HomeBloc>().add(MainGetUserEvent(
-                          //     valueCity: filterController.text == ''
-                          //         ? null
-                          //         : filterController.text,
-                          //     isReload: false));
-                          // serviceLocator<HomeBloc>().add(MainGetCityEvent(
-                          //     valueCity: filterController.text, isReload: false));
                         },
                         child: const Text(
                           'Save',

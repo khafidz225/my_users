@@ -9,7 +9,7 @@ class UserUseCase {
     return userRepositoryImpl.getUsers();
   }
 
-  Future post() async {
-    userRepositoryImpl.postUsers();
+  Future post(ModelUser dataUser) async {
+    userRepositoryImpl.postUsers(dataUser);
   }
 }

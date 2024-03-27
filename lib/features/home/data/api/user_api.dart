@@ -9,8 +9,7 @@ import 'package:my_users/features/home/presentation/bloc/home_bloc.dart';
 class UserApi {
   final Dio dio;
   final String path;
-  final ModelUser? dataPost;
-  UserApi({required this.dio, required this.path, this.dataPost});
+  UserApi({required this.dio, required this.path});
 
   // Get
   Future<List<ModelUser>> getListUsers() async {
@@ -21,8 +20,9 @@ class UserApi {
   }
 
   // Post
-  Future postUsers() async {
-    await dio.post(path, data: dataPost?.toJson()).then((value) async {
+  Future postUsers(ModelUser dataUser) async {
+    // print('dataPosts: ${dataUser.toJson()}');
+    await dio.post(path, data: dataUser.toJson()).then((value) async {
       serviceLocator<HomeBloc>().add(MainGetUserEvent(isReload: true));
 
       Get.showSnackbar(GetSnackBar(

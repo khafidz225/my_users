@@ -18,12 +18,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
   String? idUser;
   String? valueCity;
-  ModelUser? postUsers = ModelUser(
-      name: 'khafidz2',
-      city: 'Tangerang',
-      address: 'Tigaraksa',
-      email: 'khafidz2@gmail.com',
-      phoneNumber: '0881231');
+  ModelUser? postUsers;
   List<ModelUser> valueListUser = [];
   List<ModelCity> valueListCity = [];
 
@@ -68,7 +63,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future handlePostUserEvent(
       HandlePostUserEvent event, Emitter<HomeState> emit) async {
-    await serviceLocator<UserUseCase>().post().then((value) {
+    postUsers = event.dataUser;
+    await serviceLocator<UserUseCase>().post(event.dataUser).then((value) {
       print('BERHASIL MENAMBAHKAN USER');
     });
   }
@@ -77,7 +73,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       MainGetCityEvent event, Emitter<HomeState> emit) async {
     emit(HomeLoadingState());
     print('bloc valueCity 1: $valueCity');
-    if (event.valueCity != null || event.isReload) {
+    if (event.valueCity == null || event.isReload) {
       print('bloc valueCity 2: $valueCity');
       valueCity = event.valueCity;
       await serviceLocator<CityUseCase>().get().then((value) {

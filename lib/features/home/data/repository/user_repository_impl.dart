@@ -14,7 +14,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future postUsers() {
-    return userApi.postUsers();
+  Future postUsers(ModelUser dataUser) {
+    return userApi.postUsers(dataUser);
   }
 }

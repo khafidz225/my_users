@@ -24,9 +24,9 @@ setupServiceLocator() async {
 
   // USERS
   serviceLocator.registerLazySingleton<UserApi>(() => UserApi(
-      dio: serviceLocator(),
-      path: serviceLocator<Constant>().pathUser,
-      dataPost: serviceLocator<HomeBloc>().postUsers));
+        dio: serviceLocator(),
+        path: serviceLocator<Constant>().pathUser,
+      ));
   serviceLocator.registerLazySingleton<UserRepository>(
       () => UserRepositoryImpl(userApi: serviceLocator()));
   serviceLocator.registerLazySingleton<UserUseCase>(

@@ -20,4 +20,7 @@ class MainGetCityEvent extends HomeEvent {
   MainGetCityEvent({required this.isReload, this.valueCity});
 }
 
-class HandlePostUserEvent extends HomeEvent {}
+class HandlePostUserEvent extends HomeEvent {
+  final ModelUser dataUser;
+  HandlePostUserEvent({required this.dataUser});
+}
