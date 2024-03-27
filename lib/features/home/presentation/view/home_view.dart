@@ -52,7 +52,19 @@ class HomeView extends StatelessWidget {
             )),
         floatingActionButton: FloatingActionButton.small(
           backgroundColor: Palette.g40,
-          onPressed: () {},
+          onPressed: () async {
+            serviceLocator<HomeBloc>().add(HandlePostUserEvent());
+            // Get.showSnackbar(GetSnackBar(
+            //   title: 'Success',
+            //   message: 'Successfully added users',
+            //   icon: const Icon(
+            //     Icons.check,
+            //     color: Colors.white,
+            //   ),
+            //   backgroundColor: Palette.g40,
+            //   duration: const Duration(seconds: 2),
+            // ));
+          },
           child: const Icon(Icons.add),
         ),
         body: Padding(
@@ -106,7 +118,6 @@ class HomeView extends StatelessWidget {
                 ),
                 BlocBuilder<HomeBloc, HomeState>(
                   builder: (context, state) {
-                    print('rebuild: ${state.toString()}');
                     if (state is HomeLoadingState) {
                       return Center(
                         child: CircularProgressIndicator(color: Palette.g40),
@@ -142,10 +153,11 @@ class HomeView extends StatelessWidget {
                                       title: data.name ?? '-',
                                       subtitle: 'Email: ',
                                       subtitle2: 'Phone: ',
-                                      subtitle3: 'City: ',
+                                      subtitle3: 'Address: ',
                                       subtitles: data.email,
                                       subtitles2: data.phoneNumber,
-                                      subtitles3: data.city,
+                                      subtitles3: data.address,
+                                      subsubtitles3: ' - ${data.city}',
                                       height: 120,
                                       more: true,
                                       moreOptionType:

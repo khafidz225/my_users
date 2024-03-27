@@ -1,10 +1,15 @@
 import 'package:my_users/features/home/domain/model/model_user.dart';
 import 'package:my_users/features/home/domain/repository/user_repository.dart';
 
-class GetUserUseCase {
+class UserUseCase {
   final UserRepository userRepositoryImpl;
-  GetUserUseCase(this.userRepositoryImpl);
-  Future<List<ModelUser>> call() async {
+  UserUseCase(this.userRepositoryImpl);
+
+  Future<List<ModelUser>> get() async {
     return userRepositoryImpl.getUsers();
+  }
+
+  Future post() async {
+    userRepositoryImpl.postUsers();
   }
 }

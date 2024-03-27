@@ -1,11 +1,11 @@
 import 'package:my_users/features/home/domain/model/model_city.dart';
 import 'package:my_users/features/home/domain/repository/city_repository.dart';
 
-class GetCityUseCase {
+class CityUseCase {
   final CityRepository cityRepositoryImpl;
-  GetCityUseCase(this.cityRepositoryImpl);
+  CityUseCase(this.cityRepositoryImpl);
 
-  Future<List<ModelCity>> call() async {
+  Future<List<ModelCity>> get() async {
     return await cityRepositoryImpl.getCity();
   }
 }

@@ -12,4 +12,9 @@ class UserRepositoryImpl implements UserRepository {
   Future<List<ModelUser>> getUsers() {
     return userApi.getListUsers();
   }
+
+  @override
+  Future postUsers() {
+    return userApi.postUsers();
+  }
 }

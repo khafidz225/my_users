@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:my_users/core/di/service_locator.dart';
 import 'package:my_users/features/home/domain/model/model_city.dart';
 import 'package:my_users/features/home/domain/model/model_user.dart';
-import 'package:my_users/features/home/domain/usecase/get_city_usecase.dart';
-import 'package:my_users/features/home/domain/usecase/get_user_usecase.dart';
+import 'package:my_users/features/home/domain/usecase/city_usecase.dart';
+import 'package:my_users/features/home/domain/usecase/user_usecase.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
@@ -14,12 +14,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitialState()) {
     on<MainGetUserEvent>(mainGetUserEvent);
     on<MainGetCityEvent>(mainGetCityEvent);
-    // on<HomeShowSliderEvent>(homeShowSloder);
+    on<HandlePostUserEvent>(handlePostUserEvent);
   }
-  List<ModelUser> valueListUser = [];
-  List<ModelCity> valueListCity = [];
   String? idUser;
   String? valueCity;
+  ModelUser? postUsers = ModelUser(
+      name: 'khafidz2',
+      city: 'Tangerang',
+      address: 'Tigaraksa',
+      email: 'khafidz2@gmail.com',
+      phoneNumber: '0881231');
+  List<ModelUser> valueListUser = [];
+  List<ModelCity> valueListCity = [];
 
   Future mainGetUserEvent(
       MainGetUserEvent event, Emitter<HomeState> emit) async {
@@ -31,7 +37,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         event.keyword != null ||
         event.valueCity != null ||
         event.isReload) {
-      await serviceLocator<GetUserUseCase>().call().then((value) async {
+      await serviceLocator<UserUseCase>().get().then((value) async {
         valueListUser = value;
         if (event.keyword != null) {
           valueListUser = valueListUser
@@ -60,6 +66,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
+  Future handlePostUserEvent(
+      HandlePostUserEvent event, Emitter<HomeState> emit) async {
+    await serviceLocator<UserUseCase>().post().then((value) {
+      print('BERHASIL MENAMBAHKAN USER');
+    });
+  }
+
   Future mainGetCityEvent(
       MainGetCityEvent event, Emitter<HomeState> emit) async {
     emit(HomeLoadingState());
@@ -67,7 +80,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (event.valueCity != null || event.isReload) {
       print('bloc valueCity 2: $valueCity');
       valueCity = event.valueCity;
-      await serviceLocator<GetCityUseCase>().call().then((value) {
+      await serviceLocator<CityUseCase>().get().then((value) {
         valueListCity = value;
         valueListCity.sort(
           (a, b) => a.name!.toLowerCase().compareTo(b.name!.toLowerCase()),

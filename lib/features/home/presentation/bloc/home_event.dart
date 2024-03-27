@@ -20,7 +20,4 @@ class MainGetCityEvent extends HomeEvent {
   MainGetCityEvent({required this.isReload, this.valueCity});
 }
 
-class HomeShowSliderEvent extends HomeEvent {
-  late final String? id;
-  HomeShowSliderEvent(this.id);
-}
+class HandlePostUserEvent extends HomeEvent {}
