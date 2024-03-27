@@ -1,12 +1,12 @@
 part of 'home_bloc.dart';
 
 @immutable
-sealed class HomeEvent {}
-
-class HomeIncrementEvent extends HomeEvent {
-  final int number;
-
-  HomeIncrementEvent({this.number = 1});
+sealed class HomeEvent extends Equatable {
+  @override
+  List<Object> get props => [];
 }
 
-class HomeDecrementEvent extends HomeEvent {}
+class MainGetUserEvent extends HomeEvent {
+  final String? keyword;
+  MainGetUserEvent(this.keyword);
+}

@@ -1,16 +1,27 @@
 part of 'home_bloc.dart';
 
-sealed class HomeState {
-  int number;
-  HomeState(
-    this.number,
-  );
+sealed class HomeState extends Equatable {
+  @override
+  List<Object> get props => [];
 }
 
-final class HomeInitial extends HomeState {
-  HomeInitial() : super(0);
+class HomeInitialState extends HomeState {}
+
+class HomeLoadingState extends HomeState {}
+
+class HomeGetUserSuccessState extends HomeState {
+  final List<ModelUser> users;
+  HomeGetUserSuccessState(this.users);
+
+  @override
+  List<Object> get props => [users];
 }
 
-class HomeLoaded extends HomeState {
-  HomeLoaded(int number) : super(number);
+// ignore: must_be_immutable
+class HomeGetUserErrorState extends HomeState {
+  String message;
+  HomeGetUserErrorState(this.message);
+
+  @override
+  List<Object> get props => [message];
 }
