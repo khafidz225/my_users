@@ -12,5 +12,5 @@
 
 - Bloc - State Management
 - GetX - Routing
-- GetIt - Sependency Injection
+- GetIt - Dependency Injection
 - Dio - HTTP
